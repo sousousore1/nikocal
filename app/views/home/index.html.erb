@@ -1,0 +1,28 @@
+<h1>今週のカレンダー</h1>
+<table class='table'>
+  <tr>
+    <th>お名前</th>
+    <% (@display_days).times do |i| %>
+      <th class=<%= 'bg-info' if @this_monday + i == @this_day %>>
+        <%= @this_monday + i %>
+      </th>
+    <% end %>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <span><%= user.name %></span>
+        <%= image_tag(avatar_url(user), class: 'thumbnail') %>
+      </td>
+      <% (@display_days).times do |i| %>
+        <td class=<%= 'bg-info' if @this_monday + i == @this_day %>>
+          <% if user == current_user %>
+            <button class='btn btn-primary'>編集</button>
+          <% else %>
+            <% user.get_status(@this_monday + i) %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
