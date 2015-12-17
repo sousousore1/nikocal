@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  target_date: 2015-12-17
+  status: 1
+  user_id: 
+
+two:
+  target_date: 2015-12-17
+  status: 1
+  user_id: 

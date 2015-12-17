@@ -15,14 +15,39 @@
         <%= image_tag(avatar_url(user), class: 'thumbnail') %>
       </td>
       <% (@display_days).times do |i| %>
-        <td class=<%= 'bg-info' if @this_monday + i == @this_day %>>
-          <% if user == current_user %>
-            <button class='btn btn-primary'>編集</button>
-          <% else %>
-            <% user.get_status(@this_monday + i) %>
+        <% stamp = user.find_stamp_by(@this_monday + i) %>
+        <% current_day = @this_monday + i == @this_day %>
+        <td class=<%= 'bg-info' if current_day %>>
+          <% if user == current_user and current_day %>
+            <button class='btn btn-primary' data-toggle='modal' data-target='#stampModal'>編集</button>
+          <% end %>
+          <% if stamp != nil %>
+            <p><%= stamp.status %></p>
           <% end %>
         </td>
       <% end %>
     </tr>
   <% end %>
 </table>
+
+<%= form_for(@stamp) do |f| %>
+  <div id='stampModal' class='modal fade'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'><span>×</span></button>
+          <h4 class='modal-title'>スタンプ</h4>
+        </div>
+        <div class='modal-body'>
+          <%= f.date_select :target_date %>
+          <%= f.text_field :status %>
+          <%= f.hidden_field :user_id %>
+        </div>
+        <div class='modal-footer'>
+          <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">登録</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

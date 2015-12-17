@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :stamps, dependent: :destroy
+
   def name
     if /(.*)@.*/ =~ self.email
       $1
@@ -12,7 +14,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_status(target_day)
-    statu
+  def find_stamp_by(target_date)
+    stamps = self.stamps.find_all do |x| x.target_date == target_date end
+    stamps.first
   end
 end
