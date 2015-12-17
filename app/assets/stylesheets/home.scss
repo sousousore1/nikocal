@@ -1,3 +1,39 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.stamp-sprite {
+  background-image: image-url("stamp.jpg")
+}
+
+.stamp-normal {
+  display: block;
+  float: left;
+  width: 52px;
+  height: 52px;
+  background-position: 322px 426px;
+}
+
+.stamp-warning {
+  display: block;
+  float: left;
+  width: 52px;
+  height: 52px;
+  background-position: 81px 356px;
+}
+
+.stamp-danger {
+  display: block;
+  float: left;
+  width: 52px;
+  height: 52px;
+  background-position: 202px 426px;
+}
+
+.stamp-primary {
+  display: block;
+  float: left;
+  width: 52px;
+  height: 52px;
+  background-position: 264px 79px;
+}
