@@ -17,19 +17,19 @@ class HomeController < ApplicationController
       x.stamps
     end
 
-    todays_stamps = all_stamps.find_all do |x|
+    @todays_stamps = all_stamps.find_all do |x|
       x.target_date == @this_day
     end
 
-    @todays_stamps_1 = todays_stamps.find_all do |x|
+    @todays_stamps_1 = @todays_stamps.find_all do |x|
       x.status == 1
     end
 
-    @todays_stamps_2 = todays_stamps.find_all do |x|
+    @todays_stamps_2 = @todays_stamps.find_all do |x|
       x.status == 2
     end
 
-    @todays_stamps_3 = todays_stamps.find_all do |x|
+    @todays_stamps_3 = @todays_stamps.find_all do |x|
       x.status == 3
     end
   end
