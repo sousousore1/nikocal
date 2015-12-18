@@ -1,74 +1,95 @@
 <h1>今週のカレンダー</h1>
 <div class='row'>
-  <div class='col-md-6'>
-    <h2>1日の出来事を振り返ってみる</h2>
-    <%= form_for(@stamp) do |f| %>
-      <div class='form-group top-buffer'>
-        <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false }, { :class => 'form-control' } %>
-      </div>
-      <div class='form-group top-buffer'>
-        <div class='col-xs-4 col-md-4 text-center'>
-          <div style='display:inline-block;'>
-            <label class='stamp-1' for='stamp_status_1'></label> 
-          </div>
-          <%= f.radio_button :status, 1, { :class => 'form-control' } %>
-        </div>
-        <div class='col-xs-4 col-md-4 text-center'>
-          <div style='display:inline-block;'>
-            <label class='stamp-2' for='stamp_status_2'></label> 
-          </div>
-          <%= f.radio_button :status, 2, { :class => 'form-control' } %>
-        </div>
-        <div class='col-xs-4 col-md-4 text-center'>
-          <div style='display:inline-block;'>
-            <label class='stamp-3' for='stamp_status_3'></label> 
-          </div>
-          <%= f.radio_button :status, 3, { :class => 'form-control' } %>
-        </div>
-      </div>
-      <div class='form-group top-buffer'>
-        <%= f.text_area :message, { :class => 'form-control', :placeholder => "今日はどうでしたか？" } %>
-      </div>
-      <button type="submit" class="btn btn-primary">登録</button>
-      <%= f.hidden_field :user_id %>
-    <% end %>
-  </div>
-  <div class='col-md-6'>
-    <h2>昨日<%= @yesterday %>のサマリ</h2>
-    <ul class='list-group top-buffer'>
-      <li class='list-group-item list-group-item-danger'><span>いい感じ</span><span class='badge'><%= @yesterday_stamps_1.count %>人</span></li>
-      <li class='list-group-item list-group-item-warning'><span>まあまあ</span><span class='badge'><%= @yesterday_stamps_2.count %>人</span></li>
-      <li class='list-group-item list-group-item-info'><span>やな感じ</span><span class='badge'><%= @yesterday_stamps_3.count %>人</span></li>
-      <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - @yesterday_stamps.count %>人</span></li>
-    </ul>
-  </div>
-</div>
-<div class='table-responsive top-buffer'>
-<table class='table table-hover'>
-  <tr>
-    <th>ユーザ</th>
-    <% (@display_days).times do |i| %>
-      <th class=<%= 'bg-success' if @this_monday + i == @today %>>
-        <%= @this_monday + i %>
-      </th>
-    <% end %>
-  </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td>
-        <%= image_tag(avatar_url(user), { class: 'thumbnail', width: '52px', height: '52px', 'data-toggle' => 'tooltip', title: user.name }) %>
-      </td>
-      <% (@display_days).times do |i| %>
-        <% stamp = user.find_stamp_by(@this_monday + i) %>
-        <% current_day = @this_monday + i == @today %>
-        <td class=<%= 'bg-success' if current_day %>>
-          <span class='stamp-<%= stamp ? stamp.status : '3' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></span>
-        </td>
+  <div class='col-md-9'>
+    <div class='table-responsive top-buffer'>
+    <table class='table table-hover'>
+      <tr>
+        <th>ユーザ</th>
+        <% (@display_days).times do |i| %>
+          <th class=<%= 'bg-success' if @this_monday + i == @today %>>
+            <%= @this_monday + i %>
+          </th>
+        <% end %>
+      </tr>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= image_tag(avatar_url(user), { class: 'thumbnail', width: '52px', height: '52px', 'data-toggle' => 'tooltip', title: user.name }) %>
+          </td>
+          <% (@display_days).times do |i| %>
+            <% stamp = user.find_stamp_by(@this_monday + i) %>
+            <% current_day = @this_monday + i == @today %>
+            <td class=<%= 'bg-success' if current_day %>>
+              <span class='stamp-<%= stamp ? stamp.status : '2' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></span>
+            </td>
+          <% end %>
+        </tr>
       <% end %>
-    </tr>
-  <% end %>
-</table>
+    </table>
+    </div>
+  </div>
+  <div class='col-md-3'>
+    <div>
+      <h2>1日の出来事を振り返ってみる</h2>
+      <button type='button' class='btn btn-success' style='width:100%' data-toggle='modal' data-target='#stampModal'>入力する</button>
+    <div>
+    <div>
+      <h2>前の日<%= @yesterday %>のサマリ</h2>
+      <ul class='list-group top-buffer'>
+        <li class='list-group-item list-group-item-danger'><span>いい感じ</span><span class='badge'><%= @yesterday_stamps_1.count %>人</span></li>
+        <li class='list-group-item list-group-item-warning'><span>まあまあ</span><span class='badge'><%= @yesterday_stamps_2.count %>人</span></li>
+        <li class='list-group-item list-group-item-info'><span>やな感じ</span><span class='badge'><%= @yesterday_stamps_3.count %>人</span></li>
+        <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - @yesterday_stamps.count %>人</span></li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+<%= form_for(@stamp) do |f| %>
+<div class='modal fade' id='stampModal'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'><span>×</span></button>
+        <h4 class='modal-title'>1日の出来事を振り返ってみる</h4>
+      </div>
+      <div class='modal-body'>
+          <div class='form-group top-buffer'>
+            <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false }, { :class => 'form-control' } %>
+          </div>
+          <div class='form-group top-buffer'>
+            <div class='col-xs-4 col-md-4 text-center'>
+              <div style='display:inline-block;'>
+                <label class='stamp-1' for='stamp_status_1'></label> 
+              </div>
+              <%= f.radio_button :status, 1, { :class => 'form-control' } %>
+            </div>
+            <div class='col-xs-4 col-md-4 text-center'>
+              <div style='display:inline-block;'>
+                <label class='stamp-2' for='stamp_status_2'></label> 
+              </div>
+              <%= f.radio_button :status, 2, { :class => 'form-control' } %>
+            </div>
+            <div class='col-xs-4 col-md-4 text-center'>
+              <div style='display:inline-block;'>
+                <label class='stamp-3' for='stamp_status_3'></label> 
+              </div>
+              <%= f.radio_button :status, 3, { :class => 'form-control' } %>
+            </div>
+          </div>
+          <div class='form-group top-buffer'>
+            <%= f.text_area :message, { :class => 'form-control', :placeholder => "今日はどうでしたか？" } %>
+          </div>
+          <%= f.hidden_field :user_id %>
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-default' data-dismiss='modal'>キャンセル</button>
+        <button type='submit' class='btn btn-primary' data-dismiss='modal'>決定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
 
 <% content_for :head_end do %>
   <style>
