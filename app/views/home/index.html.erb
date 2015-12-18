@@ -13,8 +13,7 @@
   <% @users.each do |user| %>
     <tr>
       <td>
-        <%= image_tag(avatar_url(user), { class: 'thumbnail', width: '52px', height: '52px' }) %>
-        <span><%= user.name %></span>
+        <%= image_tag(avatar_url(user), { class: 'thumbnail', width: '52px', height: '52px', 'data-toggle' => 'tooltip', title: user.name }) %>
       </td>
       <% (@display_days).times do |i| %>
         <% stamp = user.find_stamp_by(@this_monday + i) %>
