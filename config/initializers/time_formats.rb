@@ -6,4 +6,4 @@
 # db      => "2014-10-01 00:00:00"
 
 # カスタムフォーマットを定義
-Date::DATE_FORMATS[:default] = "%m月%d日(%a)"
+Date::DATE_FORMATS[:default] = "%m/%d(%a)"

@@ -1,6 +1,7 @@
 <h1>今週のカレンダー</h1>
 <button class='btn btn-primary top-buffer' data-toggle='modal' data-target='#stampModal'>1日の出来事を振り返ってみる</button>
-<table class='table top-buffer'>
+<div class='table-responsive top-buffer'>
+<table class='table table-hover'>
   <tr>
     <th>お名前</th>
     <% (@display_days).times do |i| %>
@@ -12,8 +13,8 @@
   <% @users.each do |user| %>
     <tr>
       <td>
+        <%= image_tag(avatar_url(user), { class: 'thumbnail', width: '52px', height: '52px' }) %>
         <span><%= user.name %></span>
-        <%= image_tag(avatar_url(user), class: 'thumbnail') %>
       </td>
       <% (@display_days).times do |i| %>
         <% stamp = user.find_stamp_by(@this_monday + i) %>
@@ -25,6 +26,7 @@
     </tr>
   <% end %>
 </table>
+</div>
 <%= form_for(@stamp) do |f| %>
   <div id='stampModal' class='modal fade'>
     <div class='modal-dialog'>
@@ -39,15 +41,15 @@
           </div>
           <div class='form-group top-buffer'>
             <div class='row'>
-              <div class='col-md-4'>
+              <div class='col-xs-4 col-md-4'>
                 <span class='stamp-sprite stamp-warning'></span> 
                 <%= f.radio_button :status, 1 %>
               </div>
-              <div class='col-md-4'>
+              <div class='col-xs-4 col-md-4'>
                 <span class='stamp-sprite stamp-danger'></span> 
                 <%= f.radio_button :status, 2 %>
               </div>
-              <div class='col-md-4'>
+              <div class='col-xs-4 col-md-4'>
                 <span class='stamp-sprite stamp-primary'></span> 
                 <%= f.radio_button :status, 3 %>
               </div>
