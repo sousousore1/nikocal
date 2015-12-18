@@ -1,11 +1,57 @@
 <h1>今週のカレンダー</h1>
-<button class='btn btn-primary top-buffer' data-toggle='modal' data-target='#stampModal'>1日の出来事を振り返ってみる</button>
+<div class='row'>
+  <div class='col-md-6'>
+    <h2>1日の出来事を振り返ってみる</h2>
+
+    <%= form_for(@stamp) do |f| %>
+      <div class='row'>
+        <div class='form-group top-buffer'>
+          <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false } %>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='form-group top-buffer'>
+          <div class='col-xs-4 col-md-4'>
+            <label class='stamp-sprite stamp-warning' for='stamp_status_1'></label> 
+            <%= f.radio_button :status, 1 %>
+          </div>
+          <div class='col-xs-4 col-md-4'>
+            <label class='stamp-sprite stamp-danger' for='stamp_status_2'></label> 
+            <%= f.radio_button :status, 2 %>
+          </div>
+          <div class='col-xs-4 col-md-4'>
+            <label class='stamp-sprite stamp-primary' for='stamp_status_3'></label> 
+            <%= f.radio_button :status, 3 %>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='form-group top-buffer'>
+          <%= f.text_area :message, { :class => 'form-control', :placeholder => "今日はどうでしたか？" } %>
+        </div>
+        <button type="submit" class="btn btn-primary">登録</button>
+      </div>
+      <%= f.hidden_field :user_id %>
+    <% end %>
+  </div>
+  <div class='col-md-6'>
+    <h2>本日<%= @this_day %>のサマリ</h2>
+    <div class='top-buffer'>
+      <ul class='list-group'>
+        <li class='list-group-item list-group-item-warning'><span>良い</span><span class='badge'><%= @todays_stamps_1.count %>人</span></li>
+        <li class='list-group-item list-group-item-danger'><span>普通</span><span class='badge'><%= @todays_stamps_2.count %>人</span></li>
+        <li class='list-group-item list-group-item-info'><span>だめ</span><span class='badge'><%= @todays_stamps_3.count %>人</span></li>
+        <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - (@todays_stamps_1.count + @todays_stamps_2.count + @todays_stamps_3.count) %>人</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
 <div class='table-responsive top-buffer'>
 <table class='table table-hover'>
   <tr>
     <th>ユーザ</th>
     <% (@display_days).times do |i| %>
-      <th class=<%= 'bg-info' if @this_monday + i == @this_day %>>
+      <th class=<%= 'bg-success' if @this_monday + i == @this_day %>>
         <%= @this_monday + i %>
       </th>
     <% end %>
@@ -18,7 +64,7 @@
       <% (@display_days).times do |i| %>
         <% stamp = user.find_stamp_by(@this_monday + i) %>
         <% current_day = @this_monday + i == @this_day %>
-        <td class=<%= 'bg-info' if current_day %>>
+        <td class=<%= 'bg-success' if current_day %>>
           <span class='stamp-sprite stamp-<%= stamp ? stamp.status_class : 'normal' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></span>
         </td>
       <% end %>
