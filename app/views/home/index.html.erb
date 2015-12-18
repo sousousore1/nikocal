@@ -4,20 +4,26 @@
     <h2>1日の出来事を振り返ってみる</h2>
     <%= form_for(@stamp) do |f| %>
       <div class='form-group top-buffer'>
-        <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false } %>
+        <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false }, { :class => 'form-control' } %>
       </div>
       <div class='form-group top-buffer'>
-        <div class='col-xs-4 col-md-4'>
-          <label class='stamp-sprite stamp-warning' for='stamp_status_1'></label> 
-          <%= f.radio_button :status, 1 %>
+        <div class='col-xs-4 col-md-4 text-center'>
+          <div style='display:inline-block;'>
+            <label class='stamp-sprite stamp-warning' for='stamp_status_1'></label> 
+          </div>
+          <%= f.radio_button :status, 1, { :class => 'form-control' } %>
         </div>
-        <div class='col-xs-4 col-md-4'>
-          <label class='stamp-sprite stamp-danger' for='stamp_status_2'></label> 
-          <%= f.radio_button :status, 2 %>
+        <div class='col-xs-4 col-md-4 text-center'>
+          <div style='display:inline-block;'>
+            <label class='stamp-sprite stamp-danger' for='stamp_status_2'></label> 
+          </div>
+          <%= f.radio_button :status, 2, { :class => 'form-control' } %>
         </div>
-        <div class='col-xs-4 col-md-4'>
-          <label class='stamp-sprite stamp-primary' for='stamp_status_3'></label> 
-          <%= f.radio_button :status, 3 %>
+        <div class='col-xs-4 col-md-4 text-center'>
+          <div style='display:inline-block;'>
+            <label class='stamp-sprite stamp-primary' for='stamp_status_3'></label> 
+          </div>
+          <%= f.radio_button :status, 3, { :class => 'form-control' } %>
         </div>
       </div>
       <div class='form-group top-buffer'>
