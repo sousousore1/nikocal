@@ -3,7 +3,7 @@
 <div class='table-responsive top-buffer'>
 <table class='table table-hover'>
   <tr>
-    <th>お名前</th>
+    <th>ユーザ</th>
     <% (@display_days).times do |i| %>
       <th class=<%= 'bg-info' if @this_monday + i == @this_day %>>
         <%= @this_monday + i %>
@@ -66,4 +66,34 @@
       </div>
     </div>
   </div>
+<% end %>
+
+<% content_for :head_end do %>
+  <style>
+    .table-responsive>.fixed-column {
+      position: absolute;
+      display: inline-block;
+      width: auto;
+      border-right: 1px solid #ddd;
+      background-color: #FFFFFF;
+      box-shadow: 5px 5px 10px #DDDDDD;
+    }
+    @media(min-width:768px) {
+      .table-responsive>.fixed-column {
+        display: none;
+      }
+    }
+  </style>
+<% end %>
+<% content_for :body_end do %>
+  <script>
+    $(function(){
+        var $table = $('.table');
+        var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
+        $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
+        $fixedColumn.find('tr').each(function (i, elem) {
+          $(this).height($table.find('tr:eq(' + i + ')').height());
+        });
+    });
+  </script>
 <% end %>
