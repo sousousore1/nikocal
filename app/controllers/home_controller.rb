@@ -8,8 +8,9 @@ class HomeController < ApplicationController
         x.created_at
       end
     end.reverse
-    @this_day = Date.today
-    @this_monday = @this_day - (@this_day.wday - 1)
+    @today = Date.today
+    @yesterday = @today - (@today.wday == 1 ? 3 : 1)
+    @this_monday = @today - (@today.wday - 1)
     @display_days = DISPLAY_DAYS
     @stamp = current_user.stamps.new
 
@@ -17,19 +18,19 @@ class HomeController < ApplicationController
       x.stamps
     end
 
-    @todays_stamps = all_stamps.find_all do |x|
-      x.target_date == @this_day
+    @yesterday_stamps = all_stamps.find_all do |x|
+      x.target_date == @yesterday
     end
 
-    @todays_stamps_1 = @todays_stamps.find_all do |x|
+    @yesterday_stamps_1 = @yesterday_stamps.find_all do |x|
       x.status == 1
     end
 
-    @todays_stamps_2 = @todays_stamps.find_all do |x|
+    @yesterday_stamps_2 = @yesterday_stamps.find_all do |x|
       x.status == 2
     end
 
-    @todays_stamps_3 = @todays_stamps.find_all do |x|
+    @yesterday_stamps_3 = @yesterday_stamps.find_all do |x|
       x.status == 3
     end
   end
