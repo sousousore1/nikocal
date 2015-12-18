@@ -4,9 +4,9 @@
     <div class='table-responsive top-buffer'>
     <table class='table table-hover'>
       <tr>
-        <th>ユーザ</th>
+        <th class='text-center'>ユーザ</th>
         <% (@display_days).times do |i| %>
-          <th class=<%= 'bg-success' if @this_monday + i == @today %>>
+          <th class='text-center<%= ' bg-success' if @this_monday + i == @today %>'>
             <%= @this_monday + i %>
           </th>
         <% end %>
