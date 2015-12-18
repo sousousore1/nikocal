@@ -2,16 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.stamp-sprite {
-  background-image: image-url("stamp.jpg")
-}
-
 .stamp-normal {
   display: block;
   float: left;
   width: 52px;
   height: 52px;
-  background-position: 322px 426px;
+  background-image: image-url("3.gif");
+  background-repeat: no-repeat;
+  background-size:100% 100%;
 }
 
 .stamp-warning {
@@ -19,7 +17,9 @@
   float: left;
   width: 52px;
   height: 52px;
-  background-position: 81px 356px;
+  background-image: image-url("1.gif");
+  background-repeat: no-repeat;
+  background-size:100% 100%;
 }
 
 .stamp-danger {
@@ -27,7 +27,9 @@
   float: left;
   width: 52px;
   height: 52px;
-  background-position: 202px 426px;
+  background-image: image-url("3.gif");
+  background-repeat: no-repeat;
+  background-size:100% 100%;
 }
 
 .stamp-primary {
@@ -35,5 +37,7 @@
   float: left;
   width: 52px;
   height: 52px;
-  background-position: 264px 79px;
+  background-image: image-url("6.gif");
+  background-repeat: no-repeat;
+  background-size:100% 100%;
 }
