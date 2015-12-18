@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
   end
 
   def find_stamp_by(target_date)
-    stamps = self.stamps.find_all do |x| x.target_date == target_date end
-    stamps.first
+    self.stamps.find do |x| x.target_date == target_date end
   end
 end
