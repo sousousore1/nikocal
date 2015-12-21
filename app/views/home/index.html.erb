@@ -118,6 +118,13 @@
         $fixedColumn.find('tr').each(function (i, elem) {
           $(this).height($table.find('tr:eq(' + i + ')').height());
         });
+
+        var $tooltips = $('[data-toggle=tooltip]');
+        $tooltips.tooltip({
+            animation : false,
+            placement : 'right',
+            trigger   : 'click'
+        });
     });
   </script>
 <% end %>
