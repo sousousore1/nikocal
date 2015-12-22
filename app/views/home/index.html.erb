@@ -21,7 +21,7 @@
             <% stamp = user.find_stamp_by(@this_monday + i) %>
             <% current_day = @this_monday + i == @today %>
             <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
-              <div class='center-block stamp-<%= stamp ? stamp.status : '2' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
+              <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
             </td>
           <% end %>
         </tr>
