@@ -10,15 +10,24 @@ class HomeController < ApplicationController
     end.reverse
     @today = Date.today
     @yesterday = @today - (@today.wday == 1 ? 3 : 1)
-    @this_monday = @today - (@today.wday - 1)
+    if params[:week]
+      params_week = params[:week].to_i
+      @this_monday = @today - (@today.wday - 1 - params_week * 7)
+      @previous_week = params_week - 1
+      @next_week = params_week + 1
+    else
+      @this_monday = @today - (@today.wday - 1)
+      @previous_week = - 1
+      @next_week = 1
+    end
     @display_days = DISPLAY_DAYS
     @stamp = current_user.stamps.new
 
-    all_stamps = @users.flat_map do |x|
+    @stamps = @users.flat_map do |x|
       x.stamps
     end
 
-    @yesterday_stamps = all_stamps.find_all do |x|
+    @yesterday_stamps = @stamps.find_all do |x|
       x.target_date == @yesterday
     end
 

@@ -1,4 +1,7 @@
-<h1>今週のカレンダー</h1>
+<% if (Date.new(2016, 1, 1)..Date.new(2016, 1, 15)).any? {|x| x == Date.today} %>
+  <img src='http://illustration.artlesskitchen.com/data/text/newyear7_b.png' %>
+<% end %>
+
 <div class='row'>
   <div class='col-md-9'>
     <div class='table-responsive top-buffer'>
@@ -27,6 +30,16 @@
         </tr>
       <% end %>
     </table>
+    <nav>
+      <ul class='pagination'>
+        <li>
+          <%= link_to '≪前の週', root_path(week: @previous_week) %>
+        </li>
+        <li>
+          <%= link_to '次の週≫', root_path(week: @next_week) %>
+        </li>
+      </ul>
+    </nav>
     </div>
   </div>
   <div class='col-md-3'>
