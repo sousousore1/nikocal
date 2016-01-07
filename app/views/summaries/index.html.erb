@@ -1,14 +1,17 @@
 <h1>グラフ</h1>
 <div class='row'>
   <h2><%= Date.today.year %></h2>
-  <div class='col-md-4'>
-    <div id='pie_year'></div>
+  <div class='col-md-3'>
+    <div id='pie_today'></div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-3'>
+    <div id='pie_week'></div>
+  </div>
+  <div class='col-md-3'>
     <div id='pie_month'></div>
   </div>
-  <div class='col-md-4'>
-    <div id='pie_week'></div>
+  <div class='col-md-3'>
+    <div id='pie_year'></div>
   </div>
 </div>
 <%= content_for :body_end do %>
@@ -46,6 +49,17 @@
         },
         series: [{
           data: <%= raw @stamp_of_week_json %>
+        }]
+      });
+      $('#pie_today').highcharts({
+        title: {
+          text: '本日'
+        },
+        chart: {
+          type: 'pie'
+        },
+        series: [{
+          data: <%= raw @stamp_of_today_json %>
         }]
       });
     });
