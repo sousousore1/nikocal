@@ -1,0 +1,53 @@
+<h1>グラフ</h1>
+<div class='row'>
+  <h2><%= Date.today.year %></h2>
+  <div class='col-md-4'>
+    <div id='pie_year'></div>
+  </div>
+  <div class='col-md-4'>
+    <div id='pie_month'></div>
+  </div>
+  <div class='col-md-4'>
+    <div id='pie_week'></div>
+  </div>
+</div>
+<%= content_for :body_end do %>
+  <script src='http://code.highcharts.com/highcharts.js' ></script>
+  <script>
+    $(function () {
+      $('#pie_year').highcharts({
+        title: {
+          text: '年間'
+        },
+        chart: {
+          type: 'pie'
+        },
+        series: [{
+          data: <%= raw @stamp_of_year_json %>
+        }]
+      });
+      $('#pie_month').highcharts({
+        title: {
+          text: '月間'
+        },
+        chart: {
+          type: 'pie'
+        },
+        series: [{
+          data: <%= raw @stamp_of_month_json %>
+        }]
+      });
+      $('#pie_week').highcharts({
+        title: {
+          text: '週間'
+        },
+        chart: {
+          type: 'pie'
+        },
+        series: [{
+          data: <%= raw @stamp_of_week_json %>
+        }]
+      });
+    });
+  </script>
+<% end %>
