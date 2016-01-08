@@ -64,17 +64,6 @@ class SummariesController < ApplicationController
     end.map do |x|
       x.count
     end
-    return [stamps1, stamps2, stamps3]
-
-    stamps.group_by do |x|
-      x.status_text
-    end.map do |k, v|
-      values = v.group_by do |x|
-        x.target_date
-      end.map do |k2, v2|
-        v2.count
-      end
-      [k, values]
-    end
+    [stamps1, stamps2, stamps3]
   end
 end
