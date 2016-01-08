@@ -1,17 +1,19 @@
 <h1><%= Date.today.year %></h1>
+<%= @stamp_of_year_chart %>
 <div class='row'>
-  <div class='col-md-12'>
-    <div id='chart'></div>
-  </div>
+  <div id='chart'></div>
 </div>
 <div class='row'>
-  <div class='col-md-4'>
+  <div class='col-md-3'>
+    <div id='pie_today'></div>
+  </div>
+  <div class='col-md-3'>
     <div id='pie_week'></div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-3'>
     <div id='pie_month'></div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-3'>
     <div id='pie_year'></div>
   </div>
 </div>
@@ -24,19 +26,19 @@
           text: '年間'
         },
         xAxis: {
-          categories: <%= raw @stamp_of_year_chart_categories.to_json %>
+          categories: <%= raw @stamp_of_year_chart.keys.to_json %>
         },
         series: [{
           name: 'いい感じ',
-          data: <%= raw @stamp_of_year_chart[0].to_json %>  
+          data: <%= raw @stamp_of_year_chart.values.map { |x| x.values.sort_by {|sk, sv| sk }.map {|x| x[2] ? x[2] : 0 } %>
         },
         {
           name: 'まぁまぁ',
-          data: <%= raw @stamp_of_year_chart[1].to_json %>  
+          data: <%= raw @stamp_of_year_chart.values.map { |x| x.values }.sort_by{|sk, sv| sk }.map {|x| x[0] ? x[0] : 0 } %> 
         },
         {
           name: 'やな感じ',
-          data: <%= raw @stamp_of_year_chart[2].to_json %>  
+          data: <%= raw @stamp_of_year_chart.values.map { |x| x.values }.map {|x| x[1] ? x[1] : 0 } %>  
         }]
       });
       $('#pie_year').highcharts({
@@ -70,6 +72,17 @@
         },
         series: [{
           data: <%= raw @stamp_of_week_pie.to_json %>
+        }]
+      });
+      $('#pie_today').highcharts({
+        title: {
+          text: '本日'
+        },
+        chart: {
+          type: 'pie'
+        },
+        series: [{
+          data: <%= raw @stamp_of_today_pie.to_json %>
         }]
       });
     });
