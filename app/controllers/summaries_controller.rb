@@ -10,7 +10,9 @@ class SummariesController < ApplicationController
     @stamp_of_year_chart = convert_to_chart_from @stamp_of_year
     @stamp_of_year_chart_categories = @stamp_of_year.map do |x|
       x.target_date
-    end.uniq
+    end.uniq.find_all do |target_date|
+      (1..5).include? target_date.wday
+    end
 
     # for month
     @stamp_of_month = Stamp.all.find_all do |x|
@@ -44,7 +46,9 @@ class SummariesController < ApplicationController
     target_dates = stamps.map do |stamp|
       stamp.target_date
     end
-    target_range = (target_dates.min..target_dates.max)
+    target_range = (target_dates.min..target_dates.max).find_all do |target_date|
+      (1..5).include? target_date.wday
+    end
 
     filter = -> (stamps, status) {
       target_range.map do |target_date|
