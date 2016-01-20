@@ -28,14 +28,17 @@
         },
         series: [{
           name: 'いい感じ',
+          color: 'pink',
           data: <%= raw @stamp_of_year_chart[0].to_json %>  
         },
         {
           name: 'まぁまぁ',
+          color: 'yellow',
           data: <%= raw @stamp_of_year_chart[1].to_json %>  
         },
         {
           name: 'やな感じ',
+          color: 'gray',
           data: <%= raw @stamp_of_year_chart[2].to_json %>  
         }]
       });
@@ -48,7 +51,12 @@
         },
         series: [{
           data: <%= raw @stamp_of_year_pie.to_json %>
-        }]
+        }],
+        plotOptions: {
+          pie: {
+            colors:['pink', 'yellow', 'gray']
+          }
+        }
       });
       $('#pie_month').highcharts({
         title: {
@@ -59,7 +67,12 @@
         },
         series: [{
           data: <%= raw @stamp_of_month_pie.to_json %>
-        }]
+        }],
+        plotOptions: {
+          pie: {
+            colors:['pink', 'yellow', 'gray']
+          }
+        }
       });
       $('#pie_week').highcharts({
         title: {
@@ -70,7 +83,12 @@
         },
         series: [{
           data: <%= raw @stamp_of_week_pie.to_json %>
-        }]
+        }],
+        plotOptions: {
+          pie: {
+            colors:['pink', 'yellow', 'gray']
+          }
+        }
       });
     });
   </script>
