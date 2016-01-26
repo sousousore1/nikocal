@@ -18,7 +18,7 @@
         <tr>
           <td class='text-center'>
             <span><%= user.name %></span>
-            <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '40px', height: '40px', 'data-toggle' => 'tooltip', title: user.name }) %>
+            <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '40px', height: '40px' }) %>
           </td>
           <% (@display_days).times do |i| %>
             <% stamp = user.find_stamp_by(@this_monday + i) %>
@@ -56,8 +56,13 @@
         <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - @yesterday_stamps.count %>人</span></li>
       </ul>
     </div>
+    <div>
+      <h2>コメントの表示切替</h2>
+      <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</div>
+    </div>
   </div>
 </div>
+
 
 <%= form_for(@stamp) do |f| %>
 <div class='modal fade' id='stampModal'>
@@ -140,6 +145,20 @@
             animation : true,
             placement : 'top',
             trigger   : 'click'
+        });
+
+        var tooltipVisible = false;
+        var $commentBtn = $('#btn-comment');
+        $commentBtn.on('click', function(){
+          if (tooltipVisible) {
+            $tooltips.tooltip('hide');
+            tooltipVisible = false;
+            this.innerText = '表示する';
+          } else {
+            $tooltips.tooltip('show');
+            tooltipVisible = true;
+            this.innerText = '隠す';
+          }
         });
     });
   </script>

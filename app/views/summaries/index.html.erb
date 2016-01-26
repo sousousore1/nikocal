@@ -23,6 +23,9 @@
         title: {
           text: '年間'
         },
+        chart: {
+          type: 'column'
+        },
         xAxis: {
           categories: <%= raw @stamp_of_year_chart_categories.to_json %>
         },
@@ -40,7 +43,15 @@
           name: 'やな感じ',
           color: 'gray',
           data: <%= raw @stamp_of_year_chart[2].to_json %>  
-        }]
+        }],
+        plotOptions: {
+          area: {
+            stacking: 'percent',
+          },
+          column: {
+            stacking: 'stack',
+          }
+        }
       });
       $('#pie_year').highcharts({
         title: {
