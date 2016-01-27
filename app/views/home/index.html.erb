@@ -5,31 +5,31 @@
 <div class='row'>
   <div class='col-md-9'>
     <div class='table-responsive top-buffer'>
-    <table class='table table-hover'>
-      <tr>
-        <th class='text-center'>ユーザ</th>
-        <% (@display_days).times do |i| %>
-          <th class='text-center<%= ' bg-success' if @this_monday + i == @today %>'>
-            <%= @this_monday + i %>
-          </th>
-        <% end %>
-      </tr>
-      <% @users.each do |user| %>
+      <table id='main-table' class='table table-hover'>
         <tr>
-          <td class='text-center'>
-            <span><%= user.name %></span>
-            <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '40px', height: '40px' }) %>
-          </td>
+          <th class='text-center'>ユーザ</th>
           <% (@display_days).times do |i| %>
-            <% stamp = user.find_stamp_by(@this_monday + i) %>
-            <% current_day = @this_monday + i == @today %>
-            <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
-              <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
-            </td>
+            <th class='text-center<%= ' bg-success' if @this_monday + i == @today %>'>
+              <%= @this_monday + i %>
+            </th>
           <% end %>
         </tr>
-      <% end %>
-    </table>
+        <% @users.each do |user| %>
+          <tr>
+            <td class='text-center'>
+              <span><%= user.name %></span>
+              <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '40px', height: '40px' }) %>
+            </td>
+            <% (@display_days).times do |i| %>
+              <% stamp = user.find_stamp_by(@this_monday + i) %>
+              <% current_day = @this_monday + i == @today %>
+              <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
+                <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
     </div>
     <nav>
       <ul class='pagination'>
@@ -46,7 +46,7 @@
     <div>
       <h2>1日の出来事を振り返ってみる</h2>
       <button type='button' class='btn btn-success' style='width:100%' data-toggle='modal' data-target='#stampModal'>入力する</button>
-    <div>
+    </div>
     <div>
       <h2>前の日<%= @yesterday %>のサマリ</h2>
       <ul class='list-group top-buffer'>
@@ -58,11 +58,41 @@
     </div>
     <div>
       <h2>コメントの表示切替</h2>
-      <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</div>
+      <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</button>
     </div>
     <div>
       <h2>本日のヒトコマ</h2>
-    <div>
+    </div>
+  </div>
+</div>
+
+<div class='row visible-lg visible-md'>
+  <div class='table-responsive top-buffer'>
+    <table class='table table-responsive'>
+      <tr>
+        <th class='text-center'>ユーザ</th>
+        <% @target_dates.each do |target_date| %>
+          <th class='text-center<%= ' bg-success' if target_date == Date.today %>'>
+            <%= target_date.day %>
+          </th>
+        <% end %>
+      </tr>
+      <% @users.each do |user| %>
+        <tr>
+          <td class='text-center'>
+              <span><%= user.name %></span>
+            <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '20px', height: '20px' }) %>
+          </td>
+          <% @target_dates.each do |target_date| %>
+            <% stamp = user.find_stamp_by(target_date) %>
+            <% current_day = target_date == Date.today %>
+            <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
+              <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' style='width:25px; height:25px;' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
   </div>
 </div>
 
@@ -136,14 +166,14 @@
 <% content_for :body_end do %>
   <script>
     $(function(){
-        var $table = $('.table');
+        var $table = $('#main-table');
         var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
         $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
         $fixedColumn.find('tr').each(function (i, elem) {
           $(this).height($table.find('tr:eq(' + i + ')').height());
         });
 
-        var $tooltips = $('[data-toggle=tooltip]');
+        var $tooltips = $table.find('[data-toggle=tooltip]');
         $tooltips.tooltip({
             animation : true,
             placement : 'top',

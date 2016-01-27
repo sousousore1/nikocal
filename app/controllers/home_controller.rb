@@ -42,5 +42,12 @@ class HomeController < ApplicationController
     @yesterday_stamps_3 = @yesterday_stamps.find_all do |x|
       x.status == 3
     end
+
+    start_date = Date.new(Date.today.year, Date.today.month, 1)
+    end_date = start_date >> 1
+    end_date = end_date - 1
+    @target_dates = (start_date..end_date).to_a.find_all do |target_date|
+      (1..5).include? target_date.wday
+    end
   end
 end
