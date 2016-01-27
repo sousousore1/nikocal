@@ -15,6 +15,33 @@
     <div id='pie_year'></div>
   </div>
 </div>
+<div class='row visible-lg visible-md'>
+  <h2>月間カレンダー</h2>
+  <table class='table table-responsive'>
+    <tr>
+      <th class='text-center'>ユーザ</th>
+      <% @target_dates.each do |target_date| %>
+        <th class='text-center<%= ' bg-success' if target_date == Date.today %>'>
+          <%= target_date.day %>
+        </th>
+      <% end %>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td class='text-center'>
+          <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '20px', height: '20px' }) %>
+        </td>
+        <% @target_dates.each do |target_date| %>
+          <% stamp = user.find_stamp_by(target_date) %>
+          <% current_day = target_date == Date.today %>
+          <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
+            <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' style='width:25px; height:25px;' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <%= content_for :body_end do %>
   <script src='http://code.highcharts.com/highcharts.js' ></script>
   <script>

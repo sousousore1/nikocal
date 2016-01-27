@@ -28,6 +28,20 @@ class SummariesController < ApplicationController
       this_week.member? x.target_date
     end
     @stamp_of_week_pie = convert_to_pie_from @stamp_of_week
+
+    @users = User.all.sort_by do |x|
+      if x.stamps.any?
+        x.stamps.last.updated_at
+      else
+        x.created_at
+      end
+    end.reverse
+    start_date = Date.new(Date.today.year, Date.today.month, 1)
+    end_date = start_date >> 1
+    end_date = end_date - 1
+    @target_dates = (start_date..end_date).to_a.find_all do |target_date|
+      (1..5).include? target_date.wday
+    end
   end
 
   private
