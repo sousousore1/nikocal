@@ -1,0 +1,67 @@
+<h1><%= Date.today.month %>月</h1>
+
+<div class='row'>
+  <div class='table-responsive'>
+    <table class='table table-responsive'>
+      <tr>
+        <th class='text-center'>ユーザ</th>
+        <% @target_dates.each do |target_date| %>
+          <th class='text-center<%= ' bg-success' if target_date == Date.today %>'>
+            <%= target_date.day %>
+          </th>
+        <% end %>
+      </tr>
+      <% @users.each do |user| %>
+        <tr>
+          <td class='text-center'>
+              <span><%= user.name %></span>
+            <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '20px', height: '20px' }) %>
+          </td>
+          <% @target_dates.each do |target_date| %>
+            <% stamp = user.find_stamp_by(target_date) %>
+            <% current_day = target_date == Date.today %>
+            <td class='<%= 'bg-success' if current_day %>' style='vertical-align:middle;text-align:center;'>
+              <div class='center-block stamp-<%= stamp ? stamp.status : '0' %>' style='width:30px; height:30px;' data-toggle='tooltip' title='<%= stamp ? stamp.message : '' %>'></div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<% content_for :head_end do %>
+  <style>
+    .table-responsive>.fixed-column {
+      position: absolute;
+      display: inline-block;
+      width: auto;
+      border-right: 1px solid #ddd;
+      background-color: #FFFFFF;
+      box-shadow: 5px 5px 10px #DDDDDD;
+    }
+    @media(min-width:768px) {
+      .table-responsive>.fixed-column {
+        display: none;
+      }
+    }
+  </style>
+<% end %>
+<% content_for :body_end do %>
+  <script>
+    $(function(){
+        var $table = $('.table');
+        var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
+        $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
+        $fixedColumn.find('tr').each(function (i, elem) {
+          $(this).height($table.find('tr:eq(' + i + ')').height());
+        });
+
+        var $tooltips = $table.find('[data-toggle=tooltip]');
+        $tooltips.tooltip({
+            animation : true,
+            placement : 'top',
+            trigger   : 'click'
+        });
+    });
+  </script>
+<% end %>

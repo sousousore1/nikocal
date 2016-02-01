@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
   get 'home/help'
+  get 'home/monthly'
   devise_for :users
   resource 'stamps', :only => [:update, :create, :destroy]
   match 'summaries' => 'summaries#index', :via => :get

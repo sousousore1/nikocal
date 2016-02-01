@@ -42,7 +42,16 @@ class HomeController < ApplicationController
     @yesterday_stamps_3 = @yesterday_stamps.find_all do |x|
       x.status == 3
     end
+  end
 
+  def monthly
+    @users = User.all.sort_by do |x|
+      if x.stamps.any?
+        x.stamps.last.updated_at
+      else
+        x.created_at
+      end
+    end.reverse
     start_date = Date.new(Date.today.year, Date.today.month, 1)
     end_date = start_date >> 1
     end_date = end_date - 1

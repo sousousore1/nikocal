@@ -27,12 +27,15 @@
       <div class='collapse navbar-collapse' id='navbar'>
         <ul class='nav navbar-nav navbar-right'>
           <% if current_user %>
-            <li><a href='<%= edit_user_registration_path %>'><%= current_user.name %></a></li>
+            <li><a href='<%= home_monthly_path %>'>月間</a></li>
             <li><a href='<%= summaries_path %>'>グラフ</a></li>
+          <% end %>
+          <li><a href='<%= home_help_path %>'>ヘルプ</a></li>
+          <% if current_user %>
+            <li><a href='<%= edit_user_registration_path %>'><%= current_user.name %></a></li>
           <% else %>
             <li><a href='<%= new_user_session_path  %>'>ログイン</a></li>
           <% end %>
-          <li><a href='<%= home_help_path %>'>ヘルプ</a></li>
         </ul>
       </div>
     </div>
