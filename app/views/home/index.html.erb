@@ -61,7 +61,12 @@
       <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</button>
     </div>
     <div>
-      <h2>本日のヒトコマ</h2>
+      <h2>本日のワンチャン</h2>
+      <% if @one_chance_visible %>
+        <p class="lead text-center"><%= @todays_one_chance %>人</p>
+      <% else %>
+        <p class="lead text-center">集計中</p>
+      <% end %>
     </div>
   </div>
 </div>
@@ -100,6 +105,9 @@
           </div>
           <div class='form-group top-buffer'>
             <%= f.text_area :message, { :class => 'form-control', :placeholder => "今日はどうでしたか？" } %>
+          </div>
+          <div class='form-group top-buffer'>
+            <%= f.check_box :one_chance %> <%= f.label :one_chance, "ワンチャン？" %>
           </div>
           <%= f.hidden_field :user_id %>
       </div>

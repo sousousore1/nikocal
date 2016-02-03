@@ -29,7 +29,7 @@ class StampsController < ApplicationController
   end
 
   def stamp_params
-    params.require(:stamp).permit(:target_date, :status, :message, :user_id)
+    params.require(:stamp).permit(:target_date, :status, :message, :one_chance,  :user_id)
   end
 
   def stamp_params_target_date

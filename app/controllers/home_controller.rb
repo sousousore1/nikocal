@@ -42,6 +42,15 @@ class HomeController < ApplicationController
     @yesterday_stamps_3 = @yesterday_stamps.find_all do |x|
       x.status == 3
     end
+
+    @todays_one_chance = @stamps.count do |x|
+      x.target_date == @today && x.one_chance
+    end
+
+    todays_stamp_count = @stamps.count do |x|
+      x.target_date == @today
+    end
+    @one_chance_visible = @todays_one_chance / todays_stamp_count != 1
   end
 
   def monthly
