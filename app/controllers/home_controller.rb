@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     todays_stamp_count = @stamps.count do |x|
       x.target_date == @today
     end
-    @one_chance_percentage = (@todays_one_chance == 0 ? 0.0 : @todays_one_chance / (1.0 * todays_stamp_count) * 100).round
+    @one_chance_percentage = round (@todays_one_chance == 0 ? 0.0 : @todays_one_chance / (1.0 * @users.count) * 100)
   end
 
   def monthly
@@ -67,5 +67,10 @@ class HomeController < ApplicationController
     @target_dates = (start_date..end_date).to_a.find_all do |target_date|
       (1..5).include? target_date.wday
     end
+  end
+
+  :private
+  def round f
+    ((f + 5) / 10.0).floor * 10
   end
 end
