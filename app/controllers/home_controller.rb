@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     todays_stamp_count = @stamps.count do |x|
       x.target_date == @today
     end
-    @one_chance_visible = @todays_one_chance == 0 ? false : @todays_one_chance / todays_stamp_count != 1
+    @one_chance_percentage = (@todays_one_chance == 0 ? 0.0 : @todays_one_chance / (1.0 * todays_stamp_count) * 100).round
   end
 
   def monthly

@@ -62,11 +62,11 @@
     </div>
     <div>
       <h2>本日のワンチャン</h2>
-      <% if @one_chance_visible %>
-        <p class="lead text-center"><%= @todays_one_chance %>人</p>
-      <% else %>
-        <p class="lead text-center">集計中</p>
-      <% end %>
+      <div class="progress" style='height:40px;'>
+        <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="<%= @one_chance_percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @one_chance_percentage %>%">
+            <span class="sr-only"><%= @one_chance_percentage %>% Complete</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
