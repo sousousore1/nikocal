@@ -5,7 +5,6 @@
     <table class='table table-responsive'>
       <tr>
         <th class='text-center'>ユーザ</th>
-        <th class='text-center'>point</th>
         <% @target_dates.each do |target_date| %>
           <th class='text-center<%= ' bg-success' if target_date == Date.today %>'>
             <%= target_date.day %>
@@ -17,9 +16,6 @@
           <td class='text-center'>
               <span><%= user.name %></span>
             <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '20px', height: '20px' }) %>
-          </td>
-          <td class='text-center'>
-            <span><%= user.stamps.count %></span>
           </td>
           <% @target_dates.each do |target_date| %>
             <% stamp = user.find_stamp_by(target_date) %>
