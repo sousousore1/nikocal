@@ -43,6 +43,11 @@
           name: 'やな感じ',
           color: 'gray',
           data: <%= raw @stamp_of_year_chart[2].to_json %>  
+        },
+        {
+          name: 'ワンチャン',
+          type: 'spline',
+          data: <%= raw @stamp_of_year_chart2.to_json %>
         }],
         plotOptions: {
           area: {

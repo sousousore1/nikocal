@@ -7,6 +7,7 @@ class SummariesController < ApplicationController
       x.target_date.year == Date.today.year
     end
     @stamp_of_year_pie = convert_to_pie_from @stamp_of_year
+    @stamp_of_year_chart2 = convert_to_chart2_from @stamp_of_year
     @stamp_of_year_chart = convert_to_chart_from @stamp_of_year
     @stamp_of_year_chart_categories = @stamp_of_year.map do |x|
       x.target_date
@@ -65,5 +66,27 @@ class SummariesController < ApplicationController
     stamps2 = filter.call stamps, 2
     stamps3 = filter.call stamps, 3
     [stamps1, stamps2, stamps3]
+  end
+
+  def convert_to_chart2_from(stamps)
+    target_dates = stamps.map do |stamp|
+      stamp.target_date
+    end
+    target_range = (target_dates.min..(target_dates.max - 1)).find_all do |target_date|
+      (1..5).include? target_date.wday
+    end
+
+    filter = -> (stamps) {
+      target_range.map do |target_date|
+        stamps.find_all do |stamp|
+          stamp.target_date == target_date and
+          stamp.one_chance
+        end
+      end.map do |stamps|
+        stamps.count
+      end
+    }
+
+    filter.call stamps
   end
 end
