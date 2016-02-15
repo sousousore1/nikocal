@@ -55,14 +55,12 @@ class HomeController < ApplicationController
   end
 
   def monthly
+    year = params[:year] ? params[:year].to_i : Date.today.year
+    @month = params[:month] ? params[:month].to_i : Date.today.month
     @users = User.all.sort_by do |x|
-      if x.stamps.any?
-        x.stamps.last.updated_at
-      else
-        x.created_at
-      end
+      x.stamps.count
     end.reverse
-    start_date = Date.new(Date.today.year, Date.today.month, 1)
+    start_date = Date.new(year, @month, 1)
     end_date = start_date >> 1
     end_date = end_date - 1
     @target_dates = (start_date..end_date).to_a.find_all do |target_date|
