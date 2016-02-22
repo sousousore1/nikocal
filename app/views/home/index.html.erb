@@ -73,6 +73,12 @@
         <%= image_tag(asset_path('beer.png'), class:"img img-responsive img-thumbnail") %>
       <% end %>
     </div>
+    <% if (Date.new(2016, 2, 22)..Date.new(2016, 2, 29)).any? {|x| x == Date.today} %>
+      <div>
+        <h2>待望のChrome拡張登場!!</h2>
+        <p>インストールは<a href="<%= ENV["GOOGLE_CHROME_EXTENSION"] %>">こちら</a>から</p>
+      </div>
+    <% end %>
   </div>
 </div>
 
