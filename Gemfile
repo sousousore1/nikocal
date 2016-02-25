@@ -47,3 +47,4 @@ gem 'devise', '~> 3.4.0'
 gem 'bootstrap-sass'
 
 gem 'dotenv-rails'
+gem "watu_table_builder", :require => "table_builder"

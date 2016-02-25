@@ -1,0 +1,22 @@
+<h1 class='text-center'><%= @user.name %></h1>
+<%= image_tag(avatar_url(@user), { class: 'center-block img-rounded' }) %>
+
+<div id="calendar">
+<h2 id="month">
+  <%= link_to "<", :month => @date.beginning_of_month-1 %>
+  <%= @date.year %>年<%= @date.month %>月
+  <%= link_to ">", :month => @date.end_of_month+1 %>
+</h2>
+<%= calendar_for @stamps do |calendar| %>
+  <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+  <%= calendar.day(:day_method => :target_date) do |date, stamps| %>
+    <%= date.day %>
+    <% stamps.each do |stamp| %>
+      <div class='stamp-<%= stamp.status %> center-block' data-toggle='tooltip' title='<%= stamp.message%>'></div>
+      <div class='center-block text-center'>
+        <p><%= stamp.message %></p>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+</div>

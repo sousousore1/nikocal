@@ -17,7 +17,7 @@
         <% @users.each do |user| %>
           <tr>
             <td class='text-center'>
-              <span><%= user.name %></span>
+              <span><%= link_to user.name, user_path(user) %></span>
               <%= image_tag(avatar_url(user), { class: 'center-block img-rounded', width: '40px', height: '40px' }) %>
             </td>
             <% (@display_days).times do |i| %>
