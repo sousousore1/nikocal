@@ -43,40 +43,50 @@
     </nav>
   </div>
   <div class='col-md-3'>
-    <div>
-      <h2>1日の出来事を振り返ってみる</h2>
-      <button type='button' class='btn btn-success' style='width:100%' data-toggle='modal' data-target='#stampModal'>入力する</button>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>1日の出来事を振り返ってみる</div>
+      <div class='panel-body'>
+        <button type='button' class='btn btn-success' style='width:100%' data-toggle='modal' data-target='#stampModal'>入力する</button>
+      </div>
     </div>
-    <div>
-      <h2>前の日<%= @yesterday %>のサマリ</h2>
-      <ul class='list-group top-buffer'>
-        <li class='list-group-item list-group-item-danger'><span>いい感じ</span><span class='badge'><%= @yesterday_stamps_1.count %>人</span></li>
-        <li class='list-group-item list-group-item-warning'><span>まあまあ</span><span class='badge'><%= @yesterday_stamps_2.count %>人</span></li>
-        <li class='list-group-item list-group-item-info'><span>やな感じ</span><span class='badge'><%= @yesterday_stamps_3.count %>人</span></li>
-        <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - @yesterday_stamps.count %>人</span></li>
-      </ul>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>コメントの表示切替</div>
+      <div class='panel-body'>
+        <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</button>
+      </div>
     </div>
-    <div>
-      <h2>コメントの表示切替</h2>
-      <button id='btn-comment' class='btn btn-success' style='width:100%'>表示する</button>
-    </div>
-    <div>
+    <div class='panel panel-default'>
       <% if @one_chance_percentage <= 100 %>
-        <h2>本日のワンチャン</h2>
-        <div class="progress" style='height:40px;'>
-          <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="<%= @one_chance_percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @one_chance_percentage %>%">
-              <span class="sr-only"><%= @one_chance_percentage %>% Complete</span>
+        <div class='panel-heading'>本日のワンチャン</div>
+        <div class='panel-body'>
+          <div class="progress" style='height:40px;'>
+            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="<%= @one_chance_percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @one_chance_percentage %>%">
+                <span class="sr-only"><%= @one_chance_percentage %>% Complete</span>
+            </div>
           </div>
         </div>
       <% else %>
-        <h2>本日はゼンチャン</h2>
-        <%= image_tag(asset_path('beer.png'), class:"img img-responsive img-thumbnail") %>
+        <div class='panel-heading'>本日はゼンチャン</div>
+        <div class='panelbody'>
+          <%= image_tag(asset_path('beer.png'), class:"img img-responsive img-thumbnail") %>
+        </div>
       <% end %>
     </div>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>前の日<%= @yesterday %>のサマリ</div>
+      <div class='panel-body'>
+        <ul class='list-group top-buffer'>
+          <li class='list-group-item list-group-item-danger'><span>いい感じ</span><span class='badge'><%= @yesterday_stamps_1.count %>人</span></li>
+          <li class='list-group-item list-group-item-warning'><span>まあまあ</span><span class='badge'><%= @yesterday_stamps_2.count %>人</span></li>
+          <li class='list-group-item list-group-item-info'><span>やな感じ</span><span class='badge'><%= @yesterday_stamps_3.count %>人</span></li>
+          <li class='list-group-item'><span>未入力</span><span class='badge'><%= @users.count - @yesterday_stamps.count %>人</span></li>
+        </ul>
+      </div>
+    </div>
     <% if (Date.new(2016, 2, 22)..Date.new(2016, 2, 29)).any? {|x| x == Date.today} %>
-      <div>
-        <h2>待望のChrome拡張登場!!</h2>
-        <p>インストールは<a href="<%= ENV["GOOGLE_CHROME_EXTENSION"] %>">こちら</a>から</p>
+      <div class='panel panel-info'>
+        <div class='panel-heading'>待望のChrome拡張登場!!</div>
+        <div class='panel-body'>インストールは<a href="<%= ENV["GOOGLE_CHROME_EXTENSION"] %>">こちら</a>から</div>
       </div>
     <% end %>
   </div>
