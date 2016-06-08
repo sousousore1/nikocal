@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     todays_stamp_count = @stamps.count do |x|
       x.target_date == @today
     end
-    average_input = 0.5
+    average_input = 0.2
     @one_chance_percentage = round (@todays_one_chance == 0 ? 0.0 : @todays_one_chance / (1.0 * (@users.count * average_input)) * 100)
   end
 

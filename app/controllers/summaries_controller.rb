@@ -40,6 +40,8 @@ class SummariesController < ApplicationController
      [k.to_s, v.count] 
     end.sort_by do |k, v|
       k
+    end.find_all do |k, v|
+      k != ''
     end
   end
 
