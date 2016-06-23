@@ -89,6 +89,12 @@
         <div class='panel-body'>インストールは<a href="<%= ENV["GOOGLE_CHROME_EXTENSION"] %>">こちら</a>から</div>
       </div>
     <% end %>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>遊ぼう</div>
+      <div class='panel-body text-center'>
+        <iframe src='http://172.24.212.83:3005' width='200'></iframe>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -102,26 +108,26 @@
       </div>
       <div class='modal-body'>
           <div class='form-group top-buffer'>
-            <%= f.date_select :target_date, { :discard_year => true, :discard_month => false, :discard_day => false }, { :class => 'form-control' } %>
+            <%= f.date_select :target_date, { :discard_year => false, :discard_month => false, :discard_day => false }, { :class => 'form-control' } %>
           </div>
           <div class='form-group top-buffer'>
             <div class='col-xs-4 col-md-4 text-center'>
+              <%= f.radio_button :status, 1, { :class => 'form-control', :checked => 'checked' } %>
               <div style='display:inline-block;'>
                 <label class='stamp-1' for='stamp_status_1'></label> 
               </div>
-              <%= f.radio_button :status, 1, { :class => 'form-control' } %>
             </div>
             <div class='col-xs-4 col-md-4 text-center'>
+              <%= f.radio_button :status, 2, { :class => 'form-control' } %>
               <div style='display:inline-block;'>
                 <label class='stamp-2' for='stamp_status_2'></label> 
               </div>
-              <%= f.radio_button :status, 2, { :class => 'form-control' } %>
             </div>
             <div class='col-xs-4 col-md-4 text-center'>
+              <%= f.radio_button :status, 3, { :class => 'form-control' } %>
               <div style='display:inline-block;'>
                 <label class='stamp-3' for='stamp_status_3'></label> 
               </div>
-              <%= f.radio_button :status, 3, { :class => 'form-control' } %>
             </div>
           </div>
           <div class='form-group top-buffer'>
