@@ -52,6 +52,25 @@ class HomeController < ApplicationController
     end
     average_input = 0.2
     @one_chance_percentage = round (@todays_one_chance == 0 ? 0.0 : @todays_one_chance / (1.0 * (@users.count * average_input)) * 100)
+
+    this_monday = Date.today - (Date.today.wday - 1)
+    this_friday = this_monday + 4
+    this_week = (this_monday..this_friday)
+    @one_chance_users = User.all.sort_by do |x|
+      x.stamps.find_all do |s|
+        s.target_date.year == Date.today.year and
+        s.target_date.month == Date.today.month and
+        this_week.member? s.target_date and
+        s.one_chance
+      end.count
+    end.reverse.find_all do |x|
+      x.stamps.find_all do |s|
+        s.target_date.year == Date.today.year and
+        s.target_date.month == Date.today.month and
+        this_week.member? s.target_date and
+        s.one_chance
+      end.count > 0
+    end
   end
 
   def monthly

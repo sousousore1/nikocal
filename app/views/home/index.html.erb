@@ -64,6 +64,20 @@
                 <span class="sr-only"><%= @one_chance_percentage %>% Complete</span>
             </div>
           </div>
+          <% if 20 <= @one_chance_percentage %>
+            <div class='form-inline'>
+              <div class='form-group'>
+                <img class='img-responsive img-circle' width='100px' src='https://pbs.twimg.com/profile_images/378800000844643782/22d91c985edfd6af14ffb314270c3dd7_400x400.jpeg'>
+              </div>
+              <div class='form-group'>
+                <ul>
+                  <% @one_chance_users.take(7).shuffle.take(3).each do |x| %>
+                    <li><%= x.name %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% else %>
         <div class='panel-heading'>本日はゼンチャン</div>
