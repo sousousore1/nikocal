@@ -7,6 +7,15 @@ class StampsController < ApplicationController
       @stamp.update(stamp_params)
     end
 
+    if @stamp.message.blank?
+      default_messages = [
+        "今日すごいことがありました。え？聞きたい？この話居酒屋でしません？",
+        "のどがイガイガする。とりあえずアルコールで消毒したい",
+        "それだいたい飲みにケーションで解決できるから"
+      ]
+      @stamp.message = default_messages.shuffle.first
+    end
+
     if @stamp.save
       redirect_to root_url
     else

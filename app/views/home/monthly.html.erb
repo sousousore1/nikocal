@@ -29,6 +29,10 @@
     </table>
   </div>
 </div>
+
+<label for='my-checkbox'>AUTO</label>
+<input type="checkbox"></input>
+
 <% content_for :head_end do %>
   <style>
     .table-responsive>.fixed-column {
@@ -44,9 +48,14 @@
         display: none;
       }
     }
+    .bootstrap-switch {
+      margin: 10px;
+    };
   </style>
+  <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css'/>
 <% end %>
 <% content_for :body_end do %>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js'></script>
   <script>
     $(function(){
         var $table = $('.table');
@@ -56,11 +65,36 @@
           $(this).height($table.find('tr:eq(' + i + ')').height());
         });
 
-        var $tooltips = $table.find('[data-toggle=tooltip]');
+        var $tooltips = $table.find('[data-toggle=tooltip]:not(.stamp-0)');
         $tooltips.tooltip({
             animation : true,
             placement : 'top',
             trigger   : 'click'
+        });
+
+        var $switches = $("input[type='checkbox']");
+        $switches.bootstrapSwitch();
+        var intervalIds = [];
+        $switches.on('switchChange.bootstrapSwitch', function(event, state) {
+          if (state) {
+            intervalIds.push(
+              setInterval(function() {
+                let indexes = [];
+                for (let i = 0; i < $tooltips.length / 4; i++) {
+                  let index = Math.floor(Math.random() * $tooltips.length)
+                  indexes.push(index);
+                }
+                $tooltips.tooltip('hide');
+                for (let i = 0; i < indexes.length; i++) {
+                  let index = indexes.pop();
+                  $($tooltips[index]).click();
+                }
+            }, 5000));
+          } else {
+            for(let i = 0; i < intervalIds.length; i++) {
+              clearInterval(intervalIds[i]);
+            }
+          }
         });
     });
   </script>

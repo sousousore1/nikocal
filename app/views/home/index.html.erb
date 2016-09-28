@@ -1,5 +1,28 @@
-<% if (Date.new(2016, 1, 1)..Date.new(2016, 1, 10)).any? {|x| x == Date.today} %>
+<% if (Date.new(2016, 1, 1)..Date.new(2016, 1, 10)).include? Date.today %>
   <img class='img-responsive' src='http://illustration.artlesskitchen.com/data/text/newyear7_b.png' %>
+<% elsif (Date.new(2016, 7, 7)..Date.new(2016, 7, 7)).include? Date.today %>
+  <div class='modal fade' id='gameModal'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'><span>×</span></button>
+          <h4 class='modal-title'>今日は七夕なのでJundroしない？</h4>
+        </div>
+        <div class='modal-body text-center'>
+          <script type="text/javascript" src="http://9leap.net/games/4546/embed.js"></script>
+        </div>
+        <div class='modal-footer'>
+          <button type='button' class='btn btn-default' data-dismiss='modal'>キャンセル</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function(){
+        var $gameModal = $('#gameModal');
+        $gameModal.modal('show');
+    });
+  </script>
 <% end %>
 
 <div class='row'>
@@ -112,6 +135,7 @@
   </div>
 </div>
 
+
 <%= form_for(@stamp) do |f| %>
 <div class='modal fade' id='stampModal'>
   <div class='modal-dialog'>
@@ -148,7 +172,7 @@
             <%= f.text_area :message, { :class => 'form-control', :placeholder => "今日はどうでしたか？" } %>
           </div>
           <div class='form-group top-buffer'>
-            <%= f.check_box :one_chance %> <%= f.label :one_chance, "ワンチャン？" %>
+            <%= f.check_box :one_chance, { checked: 'checked' } %> <%= f.label :one_chance, "ワンチャン？" %>
           </div>
           <%= f.hidden_field :user_id %>
       </div>
@@ -211,6 +235,18 @@
             this.innerText = '隠す';
           }
         });
+
+        var $stamp_one_chance = $('#stamp_one_chance');
+        $stamp_one_chance.change(function() {
+          if ($(this).is(':checked')) {
+          } else {
+            if (window.confirm('ワンチャンチェックボックスを外そうとしていますがよろしいですか？')) {
+            } else {
+              this.checked = 'checked';
+            }
+          }
+        });
+
     });
   </script>
 <% end %>
