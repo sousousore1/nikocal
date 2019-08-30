@@ -49,6 +49,8 @@ class SummariesController < ApplicationController
     target_dates = stamps.map do |stamp|
       stamp.target_date
     end
+    return [] if target_dates.blank?
+
     target_range = (target_dates.min..target_dates.max).find_all do |target_date|
       (1..5).include? target_date.wday
     end
@@ -74,6 +76,8 @@ class SummariesController < ApplicationController
     target_dates = stamps.map do |stamp|
       stamp.target_date
     end
+    return [] if target_dates.blank?
+
     target_range = (target_dates.min..(target_dates.max - 1)).find_all do |target_date|
       (1..5).include? target_date.wday
     end
