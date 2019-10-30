@@ -43,7 +43,7 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'devise', '~> 3.4.0'
+gem 'devise', '~> 4.7.1'
 gem 'bootstrap-sass'
 
 gem 'dotenv-rails'
